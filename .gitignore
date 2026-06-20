@@ -1,0 +1,18 @@
+# Build outputs
+bin/
+*.prg
+*.iq
+*.prg.debug
+
+# Specs — live outside the repo in ~/Documents/Claude/Projects/GarminWatchfaces/specs/
+specs/
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+*.iml
+
+# Claude Code — personal local settings
+.claude/settings.local.json
