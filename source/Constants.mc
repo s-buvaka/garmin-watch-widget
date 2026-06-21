@@ -93,7 +93,7 @@ module Constants {
     const STEPS_FIELD_Y_OFFSET = 0.02f;  // cy + screenW * this = field cluster top y
     // Top header (brand / divider / date+battery), fractions of screenW above centre
     const MARQ_Y_OFFSET    = 0.335f;  // cy - screenW * this = "MARQ 2" centre
-    const DIVIDER_Y_OFFSET = 0.297f;  // cy - screenW * this = thin divider line
+    const DIVIDER_Y_OFFSET = 0.305f;  // cy - screenW * this = thin divider line
     const DATE_Y_OFFSET    = 0.260f;  // cy - screenW * this = date+battery line centre
     const DIVIDER_W_FRAC   = 0.135f;  // divider line width / screenW
     const BATTERY_BOTTOM_Y_OFFSET = 0.423f; // cy + screenW * this = battery centre (bottom)
