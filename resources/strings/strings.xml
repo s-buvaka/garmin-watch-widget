@@ -1,3 +1,7 @@
 <resources>
-    <string id="AppName">My Garmin Widget</string>
+    <string id="AppName">Adventurer</string>
+    <string id="LabelSteps">STEPS</string>
+    <string id="LabelHeart">HEART</string>
+    <string id="LabelSunrise">SUNRISE</string>
+    <string id="LabelTemp">TEMP</string>
 </resources>

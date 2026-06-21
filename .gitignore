@@ -16,3 +16,6 @@ specs/
 
 # Claude Code — personal local settings
 .claude/settings.local.json
+
+# Local signing key — never commit
+developer_key.der

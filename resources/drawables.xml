@@ -1,0 +1,6 @@
+<resources>
+    <bitmap id="LauncherIcon" filename="images/launcher_icon.png"/>
+    <bitmap id="background_240" filename="images/background_240.png" packingFormat="png" dithering="none"/>
+    <bitmap id="background_280" filename="images/background_280.png" packingFormat="png" dithering="none"/>
+    <bitmap id="background_390" filename="images/background_390.png" packingFormat="png" dithering="none"/>
+</resources>

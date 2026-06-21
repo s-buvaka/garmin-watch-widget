@@ -135,7 +135,7 @@ The prompt must:
 ## Implementation prompt template
 
 ```
-You are an AI agent implementing a feature in a Garmin Connect IQ widget project (Monkey C).
+You are an AI agent implementing a feature in a Garmin Connect IQ watch face project (Monkey C).
 Re-read CLAUDE.md at the repo root before touching any file. Its rules override everything below.
 
 ## Goal

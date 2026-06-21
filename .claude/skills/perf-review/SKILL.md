@@ -12,7 +12,7 @@ Reviews a diff against `main` for performance and battery impact issues specific
 - **Heap limit**: ~256 KB on older devices (fenix6 family). Large allocations or retained collections can cause out-of-memory crashes.
 - **onUpdate budget**: The system calls `View.onUpdate()` on a schedule. Heavy computation here delays rendering and drains battery.
 - **Timer resolution**: `Timer.Timer` minimum interval is ~1 second. Sub-second update loops are not possible and should not be simulated with tight timers.
-- **Background execution**: Widgets are suspended when not in the glance/full view. Timers stop. Any background work (sensors, periodic data) must be explicitly managed.
+- **Power modes**: A watch face runs in low-power (sleep) mode most of the time — `onUpdate()` is called about once per minute. Per-second work (e.g. a second hand) runs only in high-power (awake) mode, between `onExitSleep()` and `onEnterSleep()`, and must be gated on the awake state.
 - **Draw calls**: Each `dc.*` call has a cost. Minimise calls inside `onUpdate()`; prefer pre-computing values before entering the draw loop.
 
 ## Workflow
@@ -43,18 +43,18 @@ git diff main...HEAD
 ### 5. Check timer usage
 
 - Flag `Timer.Timer` intervals shorter than ~1 second.
-- Flag timers started in `onShow()` without a corresponding stop in `onHide()` — timers running while the widget is hidden waste battery.
+- Flag timers started in `onShow()` without a corresponding stop in `onHide()` — timers running while the watch face is in low-power mode waste battery.
 - Flag multiple redundant timers doing the same work.
 - Flag timer callbacks that trigger `WatchUi.requestUpdate()` at a rate higher than needed for the displayed data.
 
 ### 6. Check update frequency
 
-- Flag `WatchUi.requestUpdate()` called more often than the displayed data changes. If the widget shows minute-level data, requesting updates every second is wasteful.
+- Flag `WatchUi.requestUpdate()` called more often than the displayed data changes. If the watch face shows minute-level data, requesting updates every second is wasteful.
 - Flag `onUpdate()` calls that redraw the entire screen when only a portion has changed (full-screen redraw is acceptable if unavoidable in Connect IQ, but note if it seems excessive).
 
 ### 7. Check battery impact
 
-- Flag any sensor subscription (`Sensor.setEnabledSensors`) left enabled when the widget is hidden.
+- Flag any sensor subscription (`Sensor.setEnabledSensors`) left enabled in low-power (sleep) mode.
 - Flag GPS or heart-rate monitoring started without a clear stop condition.
 - Flag high-frequency data polling that could be replaced with event-driven updates.
 

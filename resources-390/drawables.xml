@@ -1,0 +1,6 @@
+<resources>
+    <bitmap id="IconHeart"     filename="drawables/iconheart.png"     packingFormat="png" dithering="none"/>
+    <bitmap id="IconSteps"     filename="drawables/iconsteps.png"     packingFormat="png" dithering="none"/>
+    <bitmap id="IconSunset"    filename="drawables/iconsunset.png"    packingFormat="png" dithering="none"/>
+    <bitmap id="IconElevation" filename="drawables/iconelevation.png" packingFormat="png" dithering="none"/>
+</resources>

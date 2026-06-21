@@ -1,0 +1,17 @@
+project.manifest = manifest.xml
+
+fenix6.excludeAnnotations = $(fenix6.excludeAnnotations)
+fenix6s.excludeAnnotations = $(fenix6s.excludeAnnotations)
+fenix6xpro.excludeAnnotations = $(fenix6xpro.excludeAnnotations)
+fr245.excludeAnnotations = $(fr245.excludeAnnotations)
+fr945.excludeAnnotations = $(fr945.excludeAnnotations)
+marq2.excludeAnnotations = $(marq2.excludeAnnotations)
+
+# Per-device sized icon PNGs + bitmap fonts (drawBitmap can't scale on MIP devices).
+# Buckets by screen width: 240 / 280 (covers fenix6@260) / 390.
+fenix6.resourcePath     = $(fenix6.resourcePath);resources-280
+fenix6s.resourcePath    = $(fenix6s.resourcePath);resources-240
+fenix6xpro.resourcePath = $(fenix6xpro.resourcePath);resources-280
+fr245.resourcePath      = $(fr245.resourcePath);resources-240
+fr945.resourcePath      = $(fr945.resourcePath);resources-240
+marq2.resourcePath      = $(marq2.resourcePath);resources-390

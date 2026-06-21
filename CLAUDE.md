@@ -6,9 +6,9 @@ Working agreement for AI-assisted changes in this repository. Read fully before 
 
 - Platform: Garmin Connect IQ
 - Language: Monkey C
-- App type: widget
+- App type: watch face
 - Target SDK: Connect IQ 3.1.0 (minApiLevel 3.1.0)
-- Target devices: fenix6, fenix6s, fenix6x, fr245, fr945
+- Target devices: fenix6, fenix6s, fenix6x, fr245, fr945, marq2
 - Build tool: Monkey C compiler (`monkeyc`)
 
 For project overview, build instructions, and runtime behaviour see `README.md`.
@@ -89,7 +89,7 @@ Connect IQ has no automated unit-test framework. Verification is manual, in the 
 
 ### Checklist before closing a task
 
-- [ ] Compiles without errors: `monkeyc -f monkey.jungle -d <device> -o bin/widget.prg -y developer_key.der`
+- [ ] Compiles without errors: `monkeyc -f monkey.jungle -d <device> -o bin/watchface.prg -y developer_key.der`
 - [ ] Runs without crashes in the simulator on at least one round-face target (fenix6)
 - [ ] Expected data is displayed correctly at all screen sizes of targeted devices
 - [ ] Edge cases pass: no data available, permission denied, extreme values
@@ -101,14 +101,14 @@ Run the simulator check on each device family the change affects: round (fenix6)
 
 ## 5. Documentation
 
-- `README.md` at the repo root: what the widget does, how to build, how to run in the simulator, target devices.
+- `README.md` at the repo root: what the watch face does, how to build, how to run in the simulator, target devices.
 - Update `README.md` in the same task when behaviour changes.
 
 ### Specs (ТЗ)
 
-- Specs live **outside** the repository: `~/Documents/Claude/Projects/GarminWatchfaces/specs/`
+- Specs live **outside** the repository: `~/Documents/Claude/GarminWatchface/specs/`
 - Specs are **never** committed or pushed to the repo. The `specs/` folder is listed in `.gitignore`.
-- Filename: `<TICKET>-<short-kebab-title>.md`. Ticket prefix: `WDG-NN` for widget features, `FIX-NN` for bug fixes.
+- Filename: `<TICKET>-<short-kebab-title>.md`. Ticket prefix: `WDG-NN` for watch face features, `FIX-NN` for bug fixes.
 - Specs are written in Russian, in behavioural/product framing — sections: `Цель`, `Контекст`, `Функциональные требования`, `Acceptance criteria`, `Открытые вопросы`.
 - A spec is created before implementation and is the source for the plan (section 2).
 
@@ -124,7 +124,7 @@ Run the simulator check on each device family the change affects: round (fenix6)
 **Режим 2 — Написание спеки.** Активируется командой «пиши спеку» или «режим 2».
 - Написать MD-файл спеки на основе собранных требований.
 - Уровень системного аналитика: поведение и продуктовая логика, без деталей реализации.
-- Сохранить в `~/Documents/Claude/Projects/GarminWatchfaces/specs/<TICKET>-<name>.md`.
+- Сохранить в `~/Documents/Claude/GarminWatchface/specs/<TICKET>-<name>.md`.
 - Не трогать кодовую базу в этом режиме.
 
 **Режим 3 — Написание промта на реализацию.** Активируется командой «пиши промт» или «режим 3».
@@ -136,7 +136,7 @@ Run the simulator check on each device family the change affects: round (fenix6)
 
 ```bash
 # Compile for a specific device
-monkeyc -f monkey.jungle -d fenix6 -o bin/widget.prg -y developer_key.der
+monkeyc -f monkey.jungle -d fenix6 -o bin/watchface.prg -y developer_key.der
 
 # Compile for all devices (check manifest.xml for list)
 # Run for each: fenix6, fenix6s, fenix6x, fr245, fr945
@@ -151,10 +151,10 @@ Before closing a task: compilation must succeed for all target devices in `manif
 
 - Run `git commit` or `git push` without explicit approval from the user. Staging with `git add` is allowed.
 - Commit files under `bin/`, `*.prg`, `*.iq` — these are build outputs.
-- Commit or push specs. Specs live in `~/Documents/Claude/Projects/GarminWatchfaces/specs/` and are gitignored.
+- Commit or push specs. Specs live in `~/Documents/Claude/GarminWatchface/specs/` and are gitignored.
 - Hard-code user-facing strings. All UI text goes through `resources/strings/strings.xml`.
 - Add Connect IQ permissions to `manifest.xml` without explicit approval.
-- Change widget colours, layout, or visual design without an explicit visual task.
+- Change watch face colours, layout, or visual design without an explicit visual task.
 - Use Connect IQ API calls not supported by `minApiLevel 3.1.0` without approval to raise the minimum level.
 - Put drawing code (`dc.drawText`, `dc.setColor`, etc.) in Logic or Delegate files.
 - Put business logic or system API calls in View or Delegate files.
@@ -169,6 +169,6 @@ Before closing a task: compilation must succeed for all target devices in `manif
 **Target state:**
 - Logic separated from View and Delegate into dedicated files per the rules in section 3.
 - `monkey.jungle` in place for multi-device compilation.
-- `README.md` describes the widget, build steps, and simulator usage.
+- `README.md` describes the watch face, build steps, and simulator usage.
 
 The rules in this document apply in full from the first real feature task onwards. The current single-file structure is refactored as part of that first task, not as a separate chore.
