@@ -39,20 +39,23 @@ class DrawDataFields {
     // -------- Top header: "MARQ 2" + small date line, raised above centre --------
     private static function drawHeader(dc as Graphics.Dc, cx as Number, cy as Number,
                                        screenW as Number, dateStr as String) as Void {
-        // Line 1 — brand (Rajdhani)
-        var brandFont = Fonts.small();
-        dc.setColor(Constants.COLOR_DATE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, cy - (screenW * Constants.MARQ_Y_OFFSET), brandFont,
-                    "MARQ 2", Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        var medium = BitmapTextData.MEDIUM;
+        var mcap   = [BitmapTextData.M_CAPTOP, BitmapTextData.M_CAPBOT];
+        var tan    = BitmapText.tan();
+        var orange = BitmapText.orange();
+
+        // Line 1 — brand
+        BitmapText.draw(dc, tan, medium, mcap, cx, cy - (screenW * Constants.MARQ_Y_OFFSET),
+                        "MARQ 2", BitmapText.CENTER, true);
 
         // Thin divider — exactly the width of the "MARQ 2" text
-        var divW = dc.getTextWidthInPixels("MARQ 2", brandFont);
+        var divW = BitmapText.width(medium, "MARQ 2");
         var divY = cy - (screenW * Constants.DIVIDER_Y_OFFSET);
         dc.setColor(Constants.COLOR_DATE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(1);
         dc.drawLine(cx - (divW / 2), divY, cx + (divW / 2), divY);
 
-        // Line 2 — date "SAT 20 JUN" + battery icon (day/month dim, day number accented)
+        // Line 2 — date "SAT 20 JUN" (day/month tan, day number orange)
         var day = dateStr;
         var num = "";
         var mon = "";
@@ -69,22 +72,17 @@ class DrawDataFields {
             }
         }
 
-        var font = brandFont;   // custom bundled header font
-        var sp   = dc.getTextWidthInPixels(" ", font);
-        var wDay = dc.getTextWidthInPixels(day, font);
-        var wNum = dc.getTextWidthInPixels(num, font);
-        var wMon = dc.getTextWidthInPixels(mon, font);
+        var sp   = BitmapText.width(medium, " ");
+        var wDay = BitmapText.width(medium, day);
+        var wNum = BitmapText.width(medium, num);
+        var wMon = BitmapText.width(medium, mon);
         var total = wDay + sp + wNum + sp + wMon;
         var dateY = cy - (screenW * Constants.DATE_Y_OFFSET);
         var startX = cx - (total / 2);
 
-        var vj = Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER;
-        dc.setColor(Constants.COLOR_DATE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(startX, dateY, font, day, vj);
-        dc.setColor(Constants.COLOR_ORANGE_ACCENT, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(startX + wDay + sp, dateY, font, num, vj);
-        dc.setColor(Constants.COLOR_DATE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(startX + wDay + sp + wNum + sp, dateY, font, mon, vj);
+        BitmapText.draw(dc, tan, medium, mcap, startX, dateY, day, BitmapText.LEFT, true);
+        BitmapText.draw(dc, orange, medium, mcap, startX + wDay + sp, dateY, num, BitmapText.LEFT, true);
+        BitmapText.draw(dc, tan, medium, mcap, startX + wDay + sp + wNum + sp, dateY, mon, BitmapText.LEFT, true);
     }
 
     // icon-battery.svg — viewBox 0 0 130 74.
@@ -121,8 +119,7 @@ class DrawDataFields {
     // -------- Data field: icon above value, no labels, cluster vertically centred on fcy --------
     private static function drawField(dc as Graphics.Dc, fx as Numeric, fcy as Numeric,
                                       icon as Numeric, value as String, isHeart as Boolean) as Void {
-        var font = Fonts.number();
-        var valueH  = dc.getFontHeight(font);
+        var valueH  = BitmapTextData.S_CAPBOT - BitmapTextData.S_CAPTOP;
         var spacing = icon * 0.15;
         var clusterH = icon + spacing + valueH;
         var top = fcy - (clusterH / 2.0);
@@ -130,9 +127,9 @@ class DrawDataFields {
         var valueCy = top + icon + spacing + (valueH / 2.0);
 
         Icons.drawCentered(dc, isHeart ? Icons.heart() : Icons.steps(), fx, iconCy);
-        dc.setColor(Constants.COLOR_NUMBER, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(fx, valueCy, font, value,
-                    Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        BitmapText.draw(dc, BitmapText.cream(), BitmapTextData.SEMI,
+                        [BitmapTextData.S_CAPTOP, BitmapTextData.S_CAPBOT],
+                        fx, valueCy, value, BitmapText.CENTER, true);
     }
 
     // Pick the built-in font whose height is closest to the target (the icon size),

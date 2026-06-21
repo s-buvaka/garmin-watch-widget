@@ -16,11 +16,19 @@ class DrawSubDial {
         // 3. Sunset icon
         Icons.drawCentered(dc, Icons.sunset(), cx, subCy - (subR * 0.38));
 
-        // 4. Sunrise · sunset times
+        // 4. Sunrise · sunset times (blit; the · is drawn as a dot)
+        var med  = BitmapTextData.MEDIUM;
+        var mcap = [BitmapTextData.M_CAPTOP, BitmapTextData.M_CAPBOT];
+        var tan  = BitmapText.tan();
+        var timesY = subCy - (subR * 0.10);
+        var w1  = BitmapText.width(med, sunriseStr);
+        var w2  = BitmapText.width(med, sunsetStr);
+        var gap = subR * 0.42;
+        var startX = cx - ((w1 + gap + w2) / 2);
+        BitmapText.draw(dc, tan, med, mcap, startX, timesY, sunriseStr, BitmapText.LEFT, true);
         dc.setColor(Constants.COLOR_UNIT, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, subCy - (subR * 0.10), Fonts.small(),
-                    sunriseStr + " · " + sunsetStr,
-                    Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.fillCircle(startX + w1 + (gap / 2), timesY, subR * 0.045);
+        BitmapText.draw(dc, tan, med, mcap, startX + w1 + gap, timesY, sunsetStr, BitmapText.LEFT, true);
 
         // 5. Divider
         dc.setColor(Constants.COLOR_SUBDIAL_BORDER, Graphics.COLOR_TRANSPARENT);
@@ -30,10 +38,22 @@ class DrawSubDial {
         // 6. Elevation icon
         Icons.drawCentered(dc, Icons.elevation(), cx, subCy + (subR * 0.22));
 
-        // 7. Temperature
-        dc.setColor(Constants.COLOR_UNIT, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, subCy + (subR * 0.62), Fonts.small(), tempStr,
-                    Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // 7. Temperature (blit digits; the ° is drawn as a small ring)
+        var tempY = subCy + (subR * 0.62);
+        var di = tempStr.find("°");
+        var numPart = (di != null) ? tempStr.substring(0, di) : tempStr;
+        var tw = BitmapText.width(med, numPart);
+        var degR = subR * 0.06;
+        var degSpace = (di != null) ? (degR * 2.0 + subR * 0.04) : 0.0;
+        var tStartX = cx - ((tw + degSpace) / 2);
+        BitmapText.draw(dc, tan, med, mcap, tStartX, tempY, numPart, BitmapText.LEFT, true);
+        if (di != null) {
+            var capH = BitmapTextData.M_CAPBOT - BitmapTextData.M_CAPTOP;
+            dc.setColor(Constants.COLOR_UNIT, Graphics.COLOR_TRANSPARENT);
+            dc.setPenWidth(2);
+            dc.drawCircle(tStartX + tw + degR + (subR * 0.02), tempY - (capH * 0.35), degR);
+            dc.setPenWidth(1);
+        }
     }
 
     // icon-sunset.svg — viewBox 0 0 120 100. icx/icy = icon center on screen, size = target width.

@@ -1,6 +1,9 @@
 <resources>
-    <bitmap id="IconHeart"     filename="drawables/iconheart.png"     packingFormat="png" dithering="none"/>
-    <bitmap id="IconSteps"     filename="drawables/iconsteps.png"     packingFormat="png" dithering="none"/>
-    <bitmap id="IconSunset"    filename="drawables/iconsunset.png"    packingFormat="png" dithering="none"/>
+    <bitmap id="IconHeart" filename="drawables/iconheart.png" packingFormat="png" dithering="none"/>
+    <bitmap id="IconSteps" filename="drawables/iconsteps.png" packingFormat="png" dithering="none"/>
+    <bitmap id="IconSunset" filename="drawables/iconsunset.png" packingFormat="png" dithering="none"/>
     <bitmap id="IconElevation" filename="drawables/iconelevation.png" packingFormat="png" dithering="none"/>
+    <bitmap id="TextTan"    filename="drawables/text_tan.png"    packingFormat="png" dithering="none"/>
+    <bitmap id="TextOrange" filename="drawables/text_orange.png" packingFormat="png" dithering="none"/>
+    <bitmap id="NumCream"   filename="drawables/num_cream.png"   packingFormat="png" dithering="none"/>
 </resources>
