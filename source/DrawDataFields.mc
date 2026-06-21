@@ -19,10 +19,8 @@ class DrawDataFields {
                          batteryPct as Number) as Void {
         drawHeader(dc, cx, cy, screenW, dateStr);
 
-        // Battery icon — bottom centre of the dial
-        var batW = screenW * Constants.BATTERY_ICON_W_FRAC;
-        drawBatteryIcon(dc, cx - (batW / 2), cy + (screenW * Constants.BATTERY_BOTTOM_Y_OFFSET),
-                        batW, batteryPct);
+        // Battery icon — bottom centre of the dial (outline PNG + code fill bar)
+        drawBatteryIcon(dc, cx, cy + (screenW * Constants.BATTERY_BOTTOM_Y_OFFSET), batteryPct);
 
         var fieldCy = cy + (screenW * Constants.STEPS_FIELD_Y_OFFSET);
         var stepsX = cx - (screenW * Constants.STEPS_FIELD_X_OFFSET);
@@ -85,35 +83,31 @@ class DrawDataFields {
         BitmapText.draw(dc, tan, medium, mcap, startX + wDay + sp + wNum + sp, dateY, mon, BitmapText.LEFT, true);
     }
 
-    // icon-battery.svg — viewBox 0 0 130 74.
-    private static function drawBatteryIcon(dc as Graphics.Dc, left as Numeric, midY as Numeric,
-                                            iconW as Numeric, pct as Number) as Void {
-        var s   = iconW / 130.0;
-        var top = midY - (74.0 * s / 2.0);
-        var pen = (5.0 * s + 0.5).toNumber();
-        if (pen < 1) { pen = 1; }
+    // Battery outline from PNG; the charge bar is drawn in code (level + colour).
+    private static function drawBatteryIcon(dc as Graphics.Dc, ccx as Numeric, ccy as Numeric,
+                                            pct as Number) as Void {
+        var bmp = Art.batteryOutline();
+        if (bmp == null) { return; }
+        var bw = bmp.getWidth();
+        var bh = bmp.getHeight();
+        var bx = ccx - (bw / 2);
+        var by = ccy - (bh / 2);
+        dc.drawBitmap(bx, by, bmp);
 
-        dc.setColor(Constants.COLOR_TAN, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(pen);
-        dc.drawRoundedRectangle(left + 6.0 * s, top + 16.0 * s, 104.0 * s, 42.0 * s, 7.0 * s);
-        dc.fillRoundedRectangle(left + 114.0 * s, top + 28.0 * s, 9.0 * s, 18.0 * s, 3.0 * s);
-
-        var clamped = pct;
-        if (clamped < 0) { clamped = 0; }
-        if (clamped > 100) { clamped = 100; }
-        var fillColor = Constants.COLOR_TAN;
-        if (pct >= 0 && pct <= 10) {
-            fillColor = Constants.COLOR_RED;
-        } else if (pct >= 0 && pct <= 20) {
-            fillColor = Constants.COLOR_ORANGE_ACCENT;
-        }
         if (pct > 0) {
-            var maxW = 84.0 * s;
-            var barW = maxW * clamped / 100.0;
+            var clamped = (pct > 100) ? 100 : pct;
+            var fillColor = Constants.COLOR_TAN;
+            if (pct <= 10) {
+                fillColor = Constants.COLOR_RED;
+            } else if (pct <= 20) {
+                fillColor = Constants.COLOR_ORANGE_ACCENT;
+            }
+            // Charge bar inside the shell (proportions of the outline bitmap).
+            var maxW = bw * 0.66;
+            var fillW = maxW * clamped / 100.0;
             dc.setColor(fillColor, Graphics.COLOR_TRANSPARENT);
-            dc.fillRoundedRectangle(left + 16.0 * s, top + 26.0 * s, barW, 22.0 * s, 3.0 * s);
+            dc.fillRectangle(bx + bw * 0.12, by + bh * 0.30, fillW, bh * 0.40);
         }
-        dc.setPenWidth(1);
     }
 
     // -------- Data field: icon above value, no labels, cluster vertically centred on fcy --------

@@ -36,10 +36,10 @@ class DrawSubDial {
         dc.drawLine(cx - (subR * 0.75), subCy, cx + (subR * 0.75), subCy);
 
         // 6. Elevation icon
-        Icons.drawCentered(dc, Icons.elevation(), cx, subCy + (subR * 0.22));
+        Icons.drawCentered(dc, Icons.elevation(), cx, subCy + (subR * 0.55));
 
         // 7. Temperature (blit digits; the ° is drawn as a small ring)
-        var tempY = subCy + (subR * 0.62);
+        var tempY = subCy + (subR * 1.13);
         var di = tempStr.find("°");
         var numPart = (di != null) ? tempStr.substring(0, di) : tempStr;
         var tw = BitmapText.width(med, numPart);

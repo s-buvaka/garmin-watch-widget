@@ -38,20 +38,10 @@ class AdventurerView extends WatchUi.WatchFace {
 
         // --- Fetch all data once ---
         var stepsCount = AdventurerLogic.getStepCount();
-        var stepsGoal  = AdventurerLogic.getStepGoal();
-        var stepsProgress = 0.0;
-        if (stepsCount > 0 && stepsGoal > 0) {
-            stepsProgress = stepsCount.toFloat() / stepsGoal.toFloat();
-            if (stepsProgress > 1.0) { stepsProgress = 1.0; }
-        }
+        var stepsProgress = AdventurerLogic.getStepsProgress();
 
         var hrBpm = AdventurerLogic.getHeartRateBpm();
-        var hrMax = AdventurerLogic.getMaxHeartRate();
-        var hrProgress = 0.0;
-        if (hrBpm > 0 && hrMax > 0) {
-            hrProgress = hrBpm.toFloat() / hrMax.toFloat();
-            if (hrProgress > 1.0) { hrProgress = 1.0; }
-        }
+        var hrProgress = AdventurerLogic.getHrProgress();
 
         var dateStr  = AdventurerLogic.getDateString();
         var tempStr  = AdventurerLogic.getTemperature();

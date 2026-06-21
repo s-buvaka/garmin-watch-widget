@@ -63,6 +63,45 @@ class AdventurerLogic {
         return 190; // safe default
     }
 
+    // Steps progress 0.0..1.0 (count / goal, clamped). 0.0 if unavailable.
+    (:release)
+    static function getStepsProgress() as Float {
+        var count = getStepCount();
+        var goal  = getStepGoal();
+        if (count > 0 && goal > 0) {
+            var p = count.toFloat() / goal.toFloat();
+            return (p > 1.0) ? 1.0 : p;
+        }
+        return 0.0;
+    }
+
+    // Mock — debug/simulator only. Animates 0.0 -> 1.0 once per minute (phase-shifted
+    // from the daylight ring so the three indicators don't move in lockstep).
+    (:debug)
+    static function getStepsProgress() as Float {
+        var t = System.getClockTime();
+        return ((t.sec + 20) % 60) / 60.0;
+    }
+
+    // Heart-rate progress 0.0..1.0 (bpm / maxHR, clamped). 0.0 if unavailable.
+    (:release)
+    static function getHrProgress() as Float {
+        var bpm = getHeartRateBpm();
+        var max = getMaxHeartRate();
+        if (bpm > 0 && max > 0) {
+            var p = bpm.toFloat() / max.toFloat();
+            return (p > 1.0) ? 1.0 : p;
+        }
+        return 0.0;
+    }
+
+    // Mock — debug/simulator only. Animates 0.0 -> 1.0 once per minute, phase-shifted.
+    (:debug)
+    static function getHrProgress() as Float {
+        var t = System.getClockTime();
+        return ((t.sec + 40) % 60) / 60.0;
+    }
+
     // Returns temperature as String "+N°", "--" if unavailable
     static function getTemperature() as String {
         var conditions = null;
@@ -78,10 +117,19 @@ class AdventurerLogic {
     }
 
     // Returns battery as Integer 0-100, -1 if unavailable
+    (:release)
     static function getBatteryPercent() as Number {
         var stats = System.getSystemStats();
         if (stats == null || stats.battery == null) { return -1; }
         return stats.battery.toNumber();
+    }
+
+    // Mock — debug/simulator only. Sweeps the charge 100% -> 0% once per minute so the
+    // bar animates and the low (<=20%) / critical (<=10%) fill colours are visible.
+    (:debug)
+    static function getBatteryPercent() as Number {
+        var t = System.getClockTime();
+        return 100 - (t.sec * 100 / 60);
     }
 
     // Returns date as String "SAT 20 JUN"

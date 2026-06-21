@@ -1,9 +1,16 @@
 <resources>
-    <bitmap id="IconHeart" filename="drawables/iconheart.png" packingFormat="png" dithering="none"/>
-    <bitmap id="IconSteps" filename="drawables/iconsteps.png" packingFormat="png" dithering="none"/>
-    <bitmap id="IconSunset" filename="drawables/iconsunset.png" packingFormat="png" dithering="none"/>
+    <bitmap id="IconHeart"     filename="drawables/iconheart.png"     packingFormat="png" dithering="none"/>
+    <bitmap id="IconSteps"     filename="drawables/iconsteps.png"     packingFormat="png" dithering="none"/>
+    <bitmap id="IconSunset"    filename="drawables/iconsunset.png"    packingFormat="png" dithering="none"/>
     <bitmap id="IconElevation" filename="drawables/iconelevation.png" packingFormat="png" dithering="none"/>
     <bitmap id="TextTan"    filename="drawables/text_tan.png"    packingFormat="png" dithering="none"/>
     <bitmap id="TextOrange" filename="drawables/text_orange.png" packingFormat="png" dithering="none"/>
     <bitmap id="NumCream"   filename="drawables/num_cream.png"   packingFormat="png" dithering="none"/>
+    <bitmap id="BatteryOutline" filename="drawables/battery_outline.png" packingFormat="png" dithering="none"/>
+    <bitmap id="GaugeLeftTrack"  filename="drawables/gauge_left_track.png"  packingFormat="png" dithering="none"/>
+    <bitmap id="GaugeLeftFill"   filename="drawables/gauge_left_fill.png"   packingFormat="png" dithering="none"/>
+    <bitmap id="GaugeRightTrack" filename="drawables/gauge_right_track.png" packingFormat="png" dithering="none"/>
+    <bitmap id="GaugeRightFill"  filename="drawables/gauge_right_fill.png"  packingFormat="png" dithering="none"/>
+    <bitmap id="FrameTrack" filename="drawables/frame_track.png" packingFormat="png" dithering="none"/>
+    <bitmap id="FrameFill"  filename="drawables/frame_fill.png"  packingFormat="png" dithering="none"/>
 </resources>

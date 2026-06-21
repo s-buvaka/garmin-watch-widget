@@ -69,15 +69,33 @@ module Constants {
     const COLOR_FRAME_EMPTY   = 0x2a2b25;   // unfilled segments
     const COLOR_FRAME_OUTLINE = 0x2e2f29;   // thin outline arc
 
+    // --- Dynamic art (track + fill PNGs). Offsets = bitmap top-left as fraction of screenW ---
+    const ART_GL_TRACK_X = 0.0800f;  const ART_GL_TRACK_Y = 0.1540f;
+    const ART_GL_FILL_X  = 0.0520f;  const ART_GL_FILL_Y  = 0.1335f;
+    const ART_GR_TRACK_X = 0.7180f;  const ART_GR_TRACK_Y = 0.1545f;
+    const ART_GR_FILL_X  = 0.7455f;  const ART_GR_FILL_Y  = 0.1335f;
+    const ART_FR_TRACK_X = 0.3506f;  const ART_FR_TRACK_Y = 0.6206f;
+    const ART_FR_FILL_X  = 0.3215f;  const ART_FR_FILL_Y  = 0.5915f;
+    const GAUGE_CY_FRAC  = 0.5f;     // gauges centred on the watch centre
+    const FRAME_CY_FRAC  = 0.77f;    // frame ring centre Y (below the watch centre)
+    // Reveal band (covers the unfilled part with empty colour). Radius/pen = fraction of screenW.
+    const GAUGE_BAND_MIDR_FRAC = 0.4375f;
+    const GAUGE_BAND_HW_FRAC    = 0.016f;   // half clip-box size (fraction of screenW)
+    const GL_ANG_0 = 222.0f;  const GL_ANG_100 = 125.0f;   // left gauge: fill CW (decreasing)
+    const GR_ANG_0 = 318.0f;  const GR_ANG_100 = 55.0f;    // right gauge: fill CCW (increasing)
+    const FRAME_BAND_MIDR_FRAC = 0.1738f;
+    const FRAME_BAND_HW_FRAC    = 0.011f;   // half clip-box size (fraction of screenW)
+    const FR_ANG_0 = 235.0f;  const FR_ANG_100 = 305.0f;   // frame: fill CW, length 290°
+
     // --- Data field layout (fractions of screenW) ---
     const STEPS_FIELD_X_OFFSET = 0.30f;  // cx -/+ screenW * this = left/right field center x
     const STEPS_FIELD_Y_OFFSET = 0.02f;  // cy + screenW * this = field cluster top y
     // Top header (brand / divider / date+battery), fractions of screenW above centre
-    const MARQ_Y_OFFSET    = 0.300f;  // cy - screenW * this = "MARQ 2" centre
-    const DIVIDER_Y_OFFSET = 0.262f;  // cy - screenW * this = thin divider line
-    const DATE_Y_OFFSET    = 0.225f;  // cy - screenW * this = date+battery line centre
+    const MARQ_Y_OFFSET    = 0.335f;  // cy - screenW * this = "MARQ 2" centre
+    const DIVIDER_Y_OFFSET = 0.297f;  // cy - screenW * this = thin divider line
+    const DATE_Y_OFFSET    = 0.260f;  // cy - screenW * this = date+battery line centre
     const DIVIDER_W_FRAC   = 0.135f;  // divider line width / screenW
-    const BATTERY_BOTTOM_Y_OFFSET = 0.41f;  // cy + screenW * this = battery centre (bottom)
+    const BATTERY_BOTTOM_Y_OFFSET = 0.423f; // cy + screenW * this = battery centre (bottom)
     const FIELD_ICON_FRAC      = 0.075f; // steps/heart icon size / screenW
     const BATTERY_ICON_W_FRAC  = 0.10f;  // battery icon width / screenW
 
