@@ -17,8 +17,8 @@ class DrawSubDial {
         Icons.drawCentered(dc, Icons.sunset(), cx, subCy - (subR * 0.38));
 
         // 4. Sunrise · sunset times (blit; the · is drawn as a dot)
-        var med  = BitmapTextData.MEDIUM;
-        var mcap = [BitmapTextData.M_CAPTOP, BitmapTextData.M_CAPBOT];
+        var med  = BitmapTextData.TEXT;
+        var mcap = [BitmapTextData.TEXT_CAPTOP, BitmapTextData.TEXT_CAPBOT];
         var tan  = BitmapText.tan();
         var timesY = subCy - (subR * 0.10);
         var w1  = BitmapText.width(med, sunriseStr);
@@ -48,7 +48,7 @@ class DrawSubDial {
         var tStartX = cx - ((tw + degSpace) / 2);
         BitmapText.draw(dc, tan, med, mcap, tStartX, tempY, numPart, BitmapText.LEFT, true);
         if (di != null) {
-            var capH = BitmapTextData.M_CAPBOT - BitmapTextData.M_CAPTOP;
+            var capH = BitmapTextData.TEXT_CAPBOT - BitmapTextData.TEXT_CAPTOP;
             dc.setColor(Constants.COLOR_UNIT, Graphics.COLOR_TRANSPARENT);
             dc.setPenWidth(2);
             dc.drawCircle(tStartX + tw + degR + (subR * 0.02), tempY - (capH * 0.35), degR);

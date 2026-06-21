@@ -39,8 +39,8 @@ class DrawDataFields {
     // -------- Top header: "MARQ 2" + small date line, raised above centre --------
     private static function drawHeader(dc as Graphics.Dc, cx as Number, cy as Number,
                                        screenW as Number, dateStr as String) as Void {
-        var medium = BitmapTextData.MEDIUM;
-        var mcap   = [BitmapTextData.M_CAPTOP, BitmapTextData.M_CAPBOT];
+        var medium = BitmapTextData.TEXT;
+        var mcap   = [BitmapTextData.TEXT_CAPTOP, BitmapTextData.TEXT_CAPBOT];
         var tan    = BitmapText.tan();
         var orange = BitmapText.orange();
 
@@ -119,7 +119,7 @@ class DrawDataFields {
     // -------- Data field: icon above value, no labels, cluster vertically centred on fcy --------
     private static function drawField(dc as Graphics.Dc, fx as Numeric, fcy as Numeric,
                                       icon as Numeric, value as String, isHeart as Boolean) as Void {
-        var valueH  = BitmapTextData.S_CAPBOT - BitmapTextData.S_CAPTOP;
+        var valueH  = BitmapTextData.NUM_CAPBOT - BitmapTextData.NUM_CAPTOP;
         var spacing = icon * 0.15;
         var clusterH = icon + spacing + valueH;
         var top = fcy - (clusterH / 2.0);
@@ -127,8 +127,8 @@ class DrawDataFields {
         var valueCy = top + icon + spacing + (valueH / 2.0);
 
         Icons.drawCentered(dc, isHeart ? Icons.heart() : Icons.steps(), fx, iconCy);
-        BitmapText.draw(dc, BitmapText.cream(), BitmapTextData.SEMI,
-                        [BitmapTextData.S_CAPTOP, BitmapTextData.S_CAPBOT],
+        BitmapText.draw(dc, BitmapText.cream(), BitmapTextData.NUM,
+                        [BitmapTextData.NUM_CAPTOP, BitmapTextData.NUM_CAPBOT],
                         fx, valueCy, value, BitmapText.CENTER, true);
     }
 

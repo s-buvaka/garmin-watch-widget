@@ -172,3 +172,51 @@ Before closing a task: compilation must succeed for all target devices in `manif
 - `README.md` describes the watch face, build steps, and simulator usage.
 
 The rules in this document apply in full from the first real feature task onwards. The current single-file structure is refactored as part of that first task, not as a separate chore.
+
+## 9. Fonts & text rendering
+
+### Hard platform facts (do not relitigate)
+
+- Connect IQ has **no runtime support for TTF, SVG, or vector fonts** on the target devices.
+  `Graphics.getVectorFont()` is `@since 4.2.1` — above `minApiLevel` and unsupported on
+  fenix6/6s/6xpro, fr245, fr945, marq2. **Do not** try TTF/vector fonts.
+- The resource compiler accepts only **AngelCode BMFont**: a *text* `.fnt` (starts with
+  `info face="..."`) **plus a separate `.png`** glyph atlas. Windows `.FNT` (binary, e.g. from
+  vertopal) and bare TTF are **rejected**.
+- Custom CIQ **fonts** get their glyph page **palette-reduced** on device (there is no
+  `packingFormat="png"` for fonts) → jagged/"crooked" text. This is the root cause of bad-looking
+  custom fonts, not the `.fnt` generation.
+
+### The quality approach: glyph blitting (NOT CIQ fonts)
+
+For crisp text, **bypass the font engine**: store glyphs in a **bitmap** atlas with
+`packingFormat="png" dithering="none"` (full colour + alpha on AMOLED) and blit each glyph with
+`setClip` + `drawBitmap`. This is what `source/BitmapText.mc` + `source/BitmapTextData.mc` do.
+- Bitmaps can't be recoloured at runtime → bake **one atlas per colour** (e.g. tan text, orange
+  date number, cream counts).
+- Atlas is fixed-size and ASCII-only (32–126). Draw `°`, `·`, etc. **in code** (small circles).
+- `drawBitmap` does not scale on MIP devices → generate **per screen-width buckets**
+  (`resources-240/280/390`, mapped via `monkey.jungle` `resourcePath`). marq2=390, fenix6=280 (260px),
+  fenix6xpro=280, others=240.
+
+### What the user must provide for good fonts
+
+1. A **glyph-atlas PNG per weight** — all ASCII chars 32–126 laid out in a uniform grid
+   (e.g. 19×5 cells), **white glyphs on transparent**, exported at high resolution (cell ≥ ~30px).
+   Put them in `design-assets/` (e.g. `Rajdhani-Medium.png`, `Rajdhani-SemiBold.png`).
+   *Alternatively* a **TTF** — the agent renders the atlas itself, but a hand-exported PNG atlas is
+   preferred for control over hinting/weight.
+2. The **OFL/license** file for the font (`design-assets/OFL.txt`).
+3. Which **weight → use** mapping (e.g. Medium = body text, SemiBold = numbers) and the text
+   **colours** (so the right coloured atlases are baked).
+
+### Generation pipeline (agent side)
+
+- Use Python + Pillow (in an isolated venv) to: parse the atlas grid → per-glyph metrics
+  (`atlasX, atlasY, w, h, yOffsetInCell, xAdvance`, proportional via per-cell alpha bbox) →
+  emit `source/BitmapTextData.mc`; and recolour the white atlas into the needed colours → save as
+  `<bucket>/drawables/*.png`, declared `packingFormat="png" dithering="none"`.
+- Always **self-verify before compiling**: render the metrics+atlas back to a preview PNG and read
+  it, since the simulator window can't be screenshotted reliably. Confirm baseline/spacing first.
+- For shapes drawn in code (hands, gauges, frame, the `°`/`·`): call `dc.setAntiAlias(true)` in
+  `onUpdate` (supported on all targets) for smooth edges.
