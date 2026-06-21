@@ -11,6 +11,7 @@ module BitmapText {
     const RIGHT = 2;
 
     var _tan = null;
+    var _tanSm = null;
     var _orange = null;
     var _cream = null;
     var _tried = false;
@@ -20,6 +21,7 @@ module BitmapText {
         _tried = true;
         try {
             _tan    = WatchUi.loadResource(Rez.Drawables.TextTan);
+            _tanSm  = WatchUi.loadResource(Rez.Drawables.TextTanSmall);
             _orange = WatchUi.loadResource(Rez.Drawables.TextOrange);
             _cream  = WatchUi.loadResource(Rez.Drawables.NumCream);
         } catch (ex instanceof Lang.Exception) {
@@ -27,6 +29,7 @@ module BitmapText {
     }
 
     function tan()    { _load(); return _tan; }     // header / date day,month / sub text
+    function tanSmall() { _load(); return _tanSm; } // smaller tan (sub-dial times)
     function orange() { _load(); return _orange; }  // date number
     function cream()  { _load(); return _cream; }   // step / HR counts
 

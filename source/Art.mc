@@ -12,6 +12,7 @@ module Art {
     var _glT = null; var _glF = null;
     var _grT = null; var _grF = null;
     var _frT = null; var _frF = null;
+    var _cap = null;
     var _tried = false;
 
     function _load() {
@@ -25,6 +26,7 @@ module Art {
             _grF  = WatchUi.loadResource(Rez.Drawables.GaugeRightFill);
             _frT  = WatchUi.loadResource(Rez.Drawables.FrameTrack);
             _frF  = WatchUi.loadResource(Rez.Drawables.FrameFill);
+            _cap  = WatchUi.loadResource(Rez.Drawables.CenterCap);
         } catch (ex instanceof Lang.Exception) {
         }
     }
@@ -36,6 +38,13 @@ module Art {
     function gaugeRightFill()  { _load(); return _grF; }
     function frameTrack()      { _load(); return _frT; }
     function frameFill()       { _load(); return _frF; }
+    function centerCap()       { _load(); return _cap; }
+
+    // Blit a bitmap centred on (cx, cy).
+    function drawCentered(dc as Graphics.Dc, bmp, cx as Number, cy as Number) as Void {
+        if (bmp == null) { return; }
+        dc.drawBitmap(cx - bmp.getWidth() / 2, cy - bmp.getHeight() / 2, bmp);
+    }
 
     // Draw a bitmap whose top-left is (fx, fy) as fractions of screenW.
     function drawAt(dc as Graphics.Dc, bmp, screenW as Number, fx as Float, fy as Float) as Void {

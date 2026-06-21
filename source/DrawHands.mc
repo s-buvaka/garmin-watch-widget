@@ -26,6 +26,9 @@ class DrawHands {
         drawHand(dc, cx, cy, s, hourDeg * d2r, HOUR_BODY, HOUR_INLAY, HAND_TAIL);
         drawHand(dc, cx, cy, s, minDeg * d2r, MIN_BODY, MIN_INLAY, HAND_TAIL);
 
+        // Center-cap backing — over hour & minute hands, under the second hand.
+        Art.drawCentered(dc, Art.centerCap(), cx, cy);
+
         // Second hand (active mode only)
         if (isAwake) {
             var a = secDeg * d2r;

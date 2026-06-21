@@ -59,6 +59,7 @@ module Constants {
     const SUB_DIAL_RADIUS    = 0.13f;
     const SUB_ICON_SUNSET_FRAC    = 0.085f;  // sunset icon target size / screenW
     const SUB_ICON_ELEVATION_FRAC = 0.085f;  // elevation icon target size / screenW
+    const SUBDIAL_DIVIDER_R_FRAC  = 0.150f;  // divider half-chord uses this ring radius (incl. inset)
     const COLOR_ELEV_MASK    = 0x0c0d0e;     // dark mask behind center mountain
 
     // --- Sub-dial frame (widget-frame.svg, daylight progress ring) ---

@@ -148,8 +148,16 @@ class AdventurerLogic {
         return day + " " + date + " " + month;
     }
 
+    // Mock — debug/simulator builds only. The sim has no GPS fix / weather, so the real
+    // getSunriseSunset would always return ["--","--"]; show sample times instead.
+    (:debug)
+    static function getSunriseSunset() as Array {
+        return ["6:24", "21:47"] as Array;
+    }
+
     // Returns [sunriseStr, sunsetStr] e.g. ["5:12", "21:08"], ["--","--"] if unavailable.
     // Uses Weather.getSunrise/getSunset (API 3.3.0), which need a position fix.
+    (:release)
     static function getSunriseSunset() as Array {
         var posInfo = Position.getInfo();
         if (posInfo == null || posInfo.position == null) { return ["--", "--"] as Array; }
